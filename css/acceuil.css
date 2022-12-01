@@ -1,0 +1,72 @@
+.card {
+    background-color: rgb(61, 177, 200);
+    color: rgb(255, 255, 255);
+    border-radius: 0px;
+}
+
+/*Partie header*/
+.accueil {
+    text-align: center;
+}
+
+.nav-link {
+    color: rgb(255, 255, 255);
+}
+
+.navbar-brand,
+.navbar-nav {
+    color: rgb(255, 255, 255);
+}
+
+/*Partie central*/
+.contenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#img_fond {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#img_tortue_gauche {
+    position: absolute;
+    top: 70%;
+    left: 10%;
+}
+
+#img_tortue_droite {
+    position: absolute;
+    top: 70%;
+    left: 70%;
+}
+
+#img_tortue_accouplement {
+    position: absolute;
+    top: 70%;
+    left: 45%;
+}
+
+/*Partie footer*/
+.footer {
+    color: rgb(222, 222, 222);
+    font-style: italic;
+}
+
+.gauche {
+    float: left;
+    padding-right: 10px;
+}
+
+.container-fluid {
+    background-color: rgb(61, 177, 200);
+}

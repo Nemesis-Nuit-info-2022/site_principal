@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Santé sexuelle, les p'tits kwaks</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/acceuil.css">
+</head>
+
+<body>
+    <header>
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <div class="accueil">
+                        <img height="150" src="ressources/logo.png">
+                        <h1>Santé sexuelle, les p'tits kwaks</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="Accueil.html">Acceuil</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Decathlon_Challenge</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SEIFR-api-gouvernementale</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="contenu">
+        <img id="img_fond" src="./ressources/fond.gif" name="fond">
+        <img id="img_tortue_gauche" src="./ressources/tortue_gauche.png" name="tortue_gauche" class="droppable">
+        <img id="img_tortue_droite" src="./ressources/tortue_droite.png" name="tortue_droite" class="droppable">
+        <img id="img_tortue_accouplement" src="./ressources/accouplement.png" name="tortue_accouplement"
+            style="display: none;">
+        <script>
+            let currentDroppable = null;
+
+            img_tortue_gauche.onmousedown = function (event) {
+
+                let shiftX = event.clientX - img_tortue_gauche.getBoundingClientRect().left;
+                let shiftY = event.clientY - img_tortue_gauche.getBoundingClientRect().top;
+
+                img_tortue_gauche.style.position = 'absolute';
+                img_tortue_gauche.style.zIndex = 1000;
+                document.body.append(img_tortue_gauche);
+
+                moveAt(event.pageX, event.pageY);
+
+                // Déplace la Imagee aux cordonnées (pageX, pageY)
+                // Prenant en compte les changements initiaux
+                function moveAt(pageX, pageY) {
+                    img_tortue_gauche.style.left = pageX - shiftX + 'px';
+                    img_tortue_gauche.style.top = pageY - shiftY + 'px';
+                }
+
+                function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+
+                    img_tortue_gauche.hidden = true;
+                    let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                    img_tortue_gauche.hidden = false;
+
+                    if (!elemBelow) return;
+
+                    let droppableBelow = elemBelow.closest('.droppable');
+                    if (currentDroppable != droppableBelow) {
+                        if (currentDroppable) { // null lorsque nous étions sur un élément déposable avant cet évènement
+                            leaveDroppable(currentDroppable);
+                        }
+                        currentDroppable = droppableBelow;
+                        if (currentDroppable) { // null si nous ne n'atterrissions pas sur un élément déposable maintenant
+                            // (peut être a juste quitte l'objet déposable)
+                            enterDroppable(currentDroppable);
+                        }
+                    }
+                }
+
+                // déplace la Imagee à l’évènement mousemove
+                document.addEventListener('mousemove', onMouseMove);
+
+                // dépose la Imagee, enlève les gestionnaires d’évènements dont on a pas besoin
+                img_tortue_gauche.onmouseup = function () {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    img_tortue_gauche.onmouseup = null;
+                };
+                function enterDroppable(elem) {
+                    img_tortue_droite.style.display = "none";
+                    img_tortue_gauche.style.display = "none";
+                    img_tortue_accouplement.style.display = "inline";
+                    var audio = new Audio('./ressources/tortue.mp3');
+                    audio.play();
+                    setTimeout(() => {
+                        alert("ATTENTION, RAPPORT NON PROTEGE! VHI EN APPROCHE!");
+                    }, 1000)
+                }
+
+                function leaveDroppable(elem) {
+                    elem.style.background = '';
+                }
+
+                img_tortue_gauche.ondragstart = function () {
+                    return false;
+                };
+
+            };
+
+            img_tortue_gauche.ondragstart = function () {
+                return false;
+            };
+
+
+            img_tortue_droite.onmousedown = function (event) {
+
+                let shiftX = event.clientX - img_tortue_droite.getBoundingClientRect().left;
+                let shiftY = event.clientY - img_tortue_droite.getBoundingClientRect().top;
+
+                img_tortue_droite.style.position = 'absolute';
+                img_tortue_droite.style.zIndex = 1000;
+                document.body.append(img_tortue_droite);
+
+                moveAt(event.pageX, event.pageY);
+
+                // Déplace la Imagee aux cordonnées (pageX, pageY)
+                // Prenant en compte les changements initiaux
+                function moveAt(pageX, pageY) {
+                    img_tortue_droite.style.left = pageX - shiftX + 'px';
+                    img_tortue_droite.style.top = pageY - shiftY + 'px';
+                }
+
+                function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+
+                    img_tortue_droite.hidden = true;
+                    let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                    img_tortue_droite.hidden = false;
+
+                    if (!elemBelow) return;
+
+                    let droppableBelow = elemBelow.closest('.droppable');
+                    if (currentDroppable != droppableBelow) {
+                        if (currentDroppable) { // null lorsque nous étions sur un élément déposable avant cet évènement
+                            leaveDroppable(currentDroppable);
+                        }
+                        currentDroppable = droppableBelow;
+                        if (currentDroppable) { // null si nous ne n'atterrissions pas sur un élément déposable maintenant
+                            // (peut être a juste quitte l'objet déposable)
+                            enterDroppable(currentDroppable);
+                        }
+                    }
+                }
+
+                // déplace la Imagee à l’évènement mousemove
+                document.addEventListener('mousemove', onMouseMove);
+
+                // dépose la Imagee, enlève les gestionnaires d’évènements dont on a pas besoin
+                img_tortue_droite.onmouseup = function () {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    img_tortue_droite.onmouseup = null;
+                };
+                function enterDroppable(elem) {
+                    img_tortue_droite.style.display = "none";
+                    img_tortue_gauche.style.display = "none";
+                    img_tortue_accouplement.style.display = "inline";
+                    var audio = new Audio('./ressources/tortue.mp3');
+                    audio.play();
+                    setTimeout(() => {
+                        alert("ATTENTION, RAPPORT NON PROTEGE! VHI EN APPROCHE!");
+                    }, 1000)
+                }
+
+                function leaveDroppable(elem) {
+                    elem.style.background = '';
+                }
+
+                img_tortue_droite.ondragstart = function () {
+                    return false;
+                };
+
+
+
+            };
+
+            img_tortue_droite.ondragstart = function () {
+                return false;
+            };</script>
+    </div>
+    <footer>
+
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Nuit de l'info</h3>
+                    <img class="gauche" height="150" src="ressources/logo.png">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Equipe Nemesis</h3>
+                    <ul>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                        <li>Nom Prénom</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h3>Lien utile</h3>
+                    <a class="footer" href="https://www.sida-info-service.org">Sida-info-service</a><br />
+                    <a class="footer" href="https://www.sexualites-info-sante.fr/">sexualites-info-sante</a><br />
+                    <a class="footer" href="https://www.hepatites-info-service.org/">hepatites-info-service</a><br />
+                    <a class="footer" href="https://www.vih-info-soignants.fr/">vih-info-soignants</a><br />
+                    <a class="footer" href="https://www.ligneazur.org/">ligneazur</a><br />
+                    <a class="footer" href="https://www.ligneazur.org/">ligneazur</a><br />
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
